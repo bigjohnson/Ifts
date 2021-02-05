@@ -8,7 +8,7 @@ void setup() {
   Serial.println("Accende e spegne il LED con la seriale.");
   Serial.println("s spegne il LED");
   Serial.println("a accende il LED");
-  Serial.println("l lampeggia il LED per il numero di volte inserito,\nper i multipli di 100 millisecondi inseriti.");
+  Serial.println("l lampeggia il LED per il numero di volte inserito.");
 }
 
 void loop() {
