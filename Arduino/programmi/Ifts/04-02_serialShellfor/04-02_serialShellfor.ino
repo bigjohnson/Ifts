@@ -5,10 +5,10 @@ void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
 
-  Serial.println("Accende e spegne il LED con la seriale");
+  Serial.println("Accende e spegne il LED con la seriale.");
   Serial.println("s spegne il LED");
   Serial.println("a accende il LED");
-  Serial.println("l lampeggia il LED per il ");
+  Serial.println("l lampeggia il LED per il numero di volte inserito,\nper i multipli di 100 millisecondi inseriti.");
 }
 
 void loop() {
@@ -23,20 +23,31 @@ void loop() {
       Serial.println("spento");
     } else if ( 'l' == comando ) {
       Serial.print("Lampeggia: ");
-      while (!Serial.available()){
+      while (!Serial.available()) {
       };
       comando = Serial.read();
       if ( comando >= 49 && comando <= 57 ) {
-        comando = comando - 48;
-        Serial.print(comando);
-        Serial.println(" volte.");
-        for ( unsigned char lampeggi = 0; lampeggi < comando; lampeggi++) {
-          digitalWrite(LED, HIGH);
-          Serial.println("acceso");
-          delay(500);
-          digitalWrite(LED, LOW);
-          Serial.println("spento");
-          delay(500);
+        unsigned char volte = comando - 48;
+        Serial.print(volte);
+        Serial.print(" volte ");
+              while (!Serial.available()) {
+      };
+        comando = Serial.read();
+        if ( comando >= 49 && comando <= 57 ) {
+          comando = comando - 48;
+          unsigned int attesa = 100 * comando;
+          Serial.print(attesa);
+          Serial.println(" millisecondi");
+          for ( unsigned char lampeggi = 0; lampeggi < volte; lampeggi++) {
+            digitalWrite(LED, HIGH);
+            Serial.println("acceso");
+            delay(attesa);
+            digitalWrite(LED, LOW);
+            Serial.println("spento");
+            delay(attesa);
+          }
+        } else {
+          Serial.println("Parametro sbagliato, inserire numeri da 1 a 9");
         }
       } else {
         Serial.println("Parametro sbagliato, inserire numeri da 1 a 9");
