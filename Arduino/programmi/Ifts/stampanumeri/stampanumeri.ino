@@ -10,7 +10,6 @@ void loop() {
     Serial.print("\t");
     Serial.write(carattere);
     Serial.println();
-    
   }
   while(true) {};
 }
