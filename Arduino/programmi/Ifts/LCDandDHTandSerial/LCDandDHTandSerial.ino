@@ -68,6 +68,10 @@ unsigned long tempo;
 void setup() {
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
+  Serial.begin(9600);
+      Serial.print("umidita'");
+    Serial.print("\t");
+    Serial.println("temperatura");
   //Serial.println(F("DHTxx test!"));
   lcd.setCursor(0, 0);
   lcd.print("DHT11 and LCD");
@@ -95,5 +99,8 @@ void loop() {
     lcd.setCursor(8, 1);
     lcd.print("T:");
     lcd.print(t);
+    Serial.print(h);
+    Serial.print("\t");
+    Serial.println(t);
   }
 }
