@@ -40,6 +40,9 @@
   http://www.arduino.cc/en/Tutorial/LiquidCrystal
 */
 
+#define soglia 24
+#define isteresi 1.0
+
 // include the library code:
 #include <LiquidCrystal.h>
 
@@ -69,12 +72,15 @@ void setup() {
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
   //Serial.begin(9600);
+  //Serial.println(soglia -(isteresi / 2));
   //Serial.print("umidita'");
   //Serial.print("\t");
   //Serial.println("temperatura");
   //Serial.println(F("DHTxx test!"));
   lcd.setCursor(0, 0);
   lcd.print("DHT11 and LCD");
+  lcd.setCursor(13, 1);
+  lcd.print("off ");
   dht.begin();
 }
 
@@ -100,7 +106,11 @@ void loop() {
     lcd.print("T:");
     lcd.print(t,1);
     lcd.setCursor(13, 1);
-    lcd.print("on ");
+    if ( t > ( soglia + (isteresi / 2) )) {
+      lcd.print("off ");
+    } else if ( t < ( soglia - (isteresi / 2)) ) {
+      lcd.print("on ");
+    }
     //Serial.print(h);
     //Serial.print("\t");
     //Serial.println(t);
