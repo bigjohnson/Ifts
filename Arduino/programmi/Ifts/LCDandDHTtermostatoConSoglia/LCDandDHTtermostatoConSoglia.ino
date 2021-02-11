@@ -56,9 +56,10 @@ unsigned long lastButtonPressed;
 float soglia = 26;
 #define soglia_max 35
 #define soglia_min 5
-
 // imposta l'isteresi
 #define isteresi 1.0
+// imposta la calibrazione del sensore di temperatura
+float correzione = -1;
 
 // include the library code:
 #include <LiquidCrystal.h>
@@ -119,7 +120,7 @@ void loop() {
   // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
   if (buttonState1 == LOW && soglia < soglia_max && oldbuttonState1 == HIGH && millis() > (lastButtonPressed + 100)) {
     // aumenta la soglia;
-    soglia = soglia + .5;
+    soglia = soglia + .1;
     oldbuttonState1 = buttonState1;
     //lastButtonPressed = millis();
   } else if ( buttonState1 == HIGH && oldbuttonState1 == LOW) {
@@ -129,7 +130,7 @@ void loop() {
 
   if ( buttonState2 == LOW && soglia > soglia_min && oldbuttonState2 == HIGH && millis() > (lastButtonPressed + 100)) {
     // diminuisce la soglia;
-    soglia = soglia - .5;
+    soglia = soglia - .1;
     oldbuttonState2 = buttonState2;
     //lastButtonPressed = millis();
   } else if ( buttonState2 == HIGH && oldbuttonState2 == LOW ) {
@@ -145,6 +146,7 @@ void loop() {
     int h = dht.readHumidity();
     // Read temperature as Celsius (the default)
     float t = dht.readTemperature();
+    t = t + correzione;
     lcd.print("H:");
     lcd.print(h);
     lcd.setCursor(6, 1);
