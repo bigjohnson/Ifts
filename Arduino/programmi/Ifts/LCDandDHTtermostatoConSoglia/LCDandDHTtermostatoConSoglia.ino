@@ -40,7 +40,20 @@
   http://www.arduino.cc/en/Tutorial/LiquidCrystal
 */
 
-#define soglia 26
+// inizializza i pin dei bottoni:
+const int buttonPin1 = 3;     // the number of the pushbutton pin
+const int buttonPin2 = 4;     // the number of the pushbutton pin
+
+// variables will change:
+int buttonState1 = 0;         // variable for reading the pushbutton status
+int buttonState2 = 0;         // variable for reading the pushbutton status
+
+// imposta la soglia standard
+float soglia = 26;
+#define soglia_max 35
+#define soglia_min 5
+
+// imposta l'isteresi
 #define isteresi 1.0
 
 // include the library code:
@@ -71,8 +84,8 @@ unsigned long tempo;
 void setup() {
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
-  //Serial.begin(9600);
-  //Serial.println(soglia -(isteresi / 2));
+  Serial.begin(9600);
+  Serial.println(soglia - (isteresi / 2));
   //Serial.print("umidita'");
   //Serial.print("\t");
   //Serial.println("temperatura");
@@ -84,7 +97,8 @@ void setup() {
   dht.begin();
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
-  
+  pinMode(buttonPin1, INPUT_PULLUP);
+  pinMode(buttonPin2, INPUT_PULLUP);
 }
 
 void loop() {
@@ -95,7 +109,22 @@ void loop() {
   // print the number of seconds since reset:
   //lcd.print(millis() / 1000);
 
+
+
   if ((millis() - tempo) > 500) {
+
+    buttonState1 = digitalRead(buttonPin1);
+    buttonState2 = digitalRead(buttonPin2);
+
+    // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+    if (buttonState1 == LOW && soglia < soglia_max ) {
+      // aumenta la soglia;
+      soglia = soglia + .5;
+    } else if ( buttonState2 == LOW && soglia > soglia_min) {
+      // diminuisce la soglia;
+      soglia = soglia - .5;
+    }
+
     tempo = millis();
     lcd.setCursor(0, 1);
     // Reading temperature or humidity takes about 250 milliseconds!
@@ -107,7 +136,7 @@ void loop() {
     lcd.print(h);
     lcd.setCursor(6, 1);
     lcd.print("T:");
-    lcd.print(t,1);
+    lcd.print(t, 1);
     lcd.setCursor(13, 1);
     if ( t > ( soglia + (isteresi / 2) )) {
       lcd.print("off ");
@@ -117,7 +146,8 @@ void loop() {
       digitalWrite(LED_BUILTIN, HIGH);
     }
     lcd.setCursor(8, 0);
-    lcd.print(soglia);
+    lcd.print(soglia,1);
+    lcd.print(" ");
     //Serial.print(h);
     //Serial.print("\t");
     //Serial.println(t);
