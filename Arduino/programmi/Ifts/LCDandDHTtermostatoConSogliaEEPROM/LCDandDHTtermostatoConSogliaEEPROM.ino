@@ -41,8 +41,8 @@
 */
 
 // inizializza i pin dei bottoni:
-const int buttonPin1 = 3;     // the number of the pushbutton pin
-const int buttonPin2 = 4;     // the number of the pushbutton pin
+#define BUTTON_PIN_1 3      // the number of the pushbutton pin
+#define BUTTON_PIN_2 4    // the number of the pushbutton pin
 
 // variables will change:
 boolean buttonState1 = 0;         // variable for reading the pushbutton status
@@ -111,8 +111,8 @@ void setup() {
   dht.begin();
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
-  pinMode(buttonPin1, INPUT_PULLUP);
-  pinMode(buttonPin2, INPUT_PULLUP);
+  pinMode(BUTTON_PIN_1, INPUT_PULLUP);
+  pinMode(BUTTON_PIN_2, INPUT_PULLUP);
   unsigned char controllo = EEPROM.read(CONTROLL_ADRESS);
   //Serial.println(controllo);
   if ( controllo == 123 ) {
@@ -134,8 +134,8 @@ void loop() {
   // print the number of seconds since reset:
   //lcd.print(millis() / 1000);
 
-  buttonState1 = digitalRead(buttonPin1);
-  buttonState2 = digitalRead(buttonPin2);
+  buttonState1 = digitalRead(BUTTON_PIN_1);
+  buttonState2 = digitalRead(BUTTON_PIN_2);
 
   // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
   if (buttonState1 == LOW && soglia < SOGLIA_MAX && oldbuttonState1 == HIGH && millis() > (lastButtonPressed + 100)) {
@@ -162,7 +162,8 @@ void loop() {
 
   if ((millis() - tempo) > 500) {
     lcd.setCursor(15, 0);
-    if (blink) {
+    
+    if ( blink ) {
       lcd.print(".");
       blink = false;
     } else {
