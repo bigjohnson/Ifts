@@ -204,7 +204,14 @@ void loop() {
     lcd.setCursor(15, 0);
     if ( blink ) {
       lcd.write(blinkChar);
-      digitalWrite(PIN_ALLARME, allarmato);
+      //digitalWrite(PIN_ALLARME, allarmato);
+      for(unsigned char i=0;i<50;i++)
+      {
+        digitalWrite(PIN_ALLARME,allarmato);
+        delay(1);//wait for 2ms
+        digitalWrite(PIN_ALLARME,LOW);
+        delay(1);//wait for 2ms
+      }
       blink = false;
     } else {
       lcd.print(" ");
