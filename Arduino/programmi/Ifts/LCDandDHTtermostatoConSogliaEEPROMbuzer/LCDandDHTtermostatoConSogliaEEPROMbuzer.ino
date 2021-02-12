@@ -50,16 +50,18 @@ boolean buttonState2 = 0;         // variable for reading the pushbutton status
 
 boolean blink;
 
-boolean oldbuttonState1 = 1;         // variable for reading the pushbutton status
-boolean oldbuttonState2 = 1;         // variable for reading the pushbutton status
+boolean oldbuttonState1 = 1;      // variable for reading the pushbutton status
+boolean oldbuttonState2 = 1;      // variable for reading the pushbutton status
 
 unsigned long lastButtonPressed;
 
 // imposta la soglia standard
 float soglia = 26;
-#define SOGLIA_MAX 4.5
+#define SOGLIA_MAX 5
 #define SOGLIA_MIN -10
-#define ALLARME 5
+#define ALLARME 7
+#define PIN_ALLARME 5
+boolean allarmato = false;
 
 // imposta l'isteresi
 #define ISTERESI 1.0
@@ -114,6 +116,7 @@ void setup() {
   lcd.print("off ");
   dht.begin();
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(PIN_ALLARME, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
   pinMode(BUTTON_PIN_1, INPUT_PULLUP);
   pinMode(BUTTON_PIN_2, INPUT_PULLUP);
@@ -192,17 +195,21 @@ void loop() {
 
     if ( t > ALLARME ) {
       blinkChar = 'E';
+      allarmato = HIGH;
     } else {
       blinkChar = '.';
+      allarmato = LOW;
     }
 
     lcd.setCursor(15, 0);
     if ( blink ) {
       lcd.write(blinkChar);
+      digitalWrite(PIN_ALLARME, allarmato);
       blink = false;
     } else {
       lcd.print(" ");
       blink = true;
+      digitalWrite(PIN_ALLARME, LOW);
     }
 
   }
