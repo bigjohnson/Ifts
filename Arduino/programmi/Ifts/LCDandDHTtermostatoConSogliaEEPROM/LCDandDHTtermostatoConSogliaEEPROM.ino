@@ -45,11 +45,13 @@ const int buttonPin1 = 3;     // the number of the pushbutton pin
 const int buttonPin2 = 4;     // the number of the pushbutton pin
 
 // variables will change:
-int buttonState1 = 0;         // variable for reading the pushbutton status
-int buttonState2 = 0;         // variable for reading the pushbutton status
+boolean buttonState1 = 0;         // variable for reading the pushbutton status
+boolean buttonState2 = 0;         // variable for reading the pushbutton status
 
-int oldbuttonState1 = 1;         // variable for reading the pushbutton status
-int oldbuttonState2 = 1;         // variable for reading the pushbutton status
+boolean blink;
+
+boolean oldbuttonState1 = 1;         // variable for reading the pushbutton status
+boolean oldbuttonState2 = 1;         // variable for reading the pushbutton status
 
 unsigned long lastButtonPressed;
 
@@ -159,6 +161,15 @@ void loop() {
   }
 
   if ((millis() - tempo) > 500) {
+    lcd.setCursor(15, 0);
+    if (blink) {
+      lcd.print(".");
+      blink = false;
+    } else {
+      lcd.print(" ");
+      blink = true;
+    }
+    
     tempo = millis();
     lcd.setCursor(0, 1);
     // Reading temperature or humidity takes about 250 milliseconds!
