@@ -72,17 +72,23 @@ void loop() {
       lcd.print(" ");
       blink = true;
     }
-    unsigned int distanza = sr04.Distance();
-    lcd.setCursor(0, 1);
-    lcd.print(distanza);
-    lcd.print(" cm");
+    float distanza = 0;
+    const unsigned char media = 10;
+    for (unsigned char i = 0; i < media; i++) {
+      distanza += sr04.Distance();
+    }
+    distanza /= media;
+    lcd.setCursor(0, 0);
+    lcd.print(distanza, 0);
+    lcd.print(" cm  ");
     Serial.println(distanza);
   }
+  
   // set the cursor to column 0, line 1
   // (note: line 1 is the second row, since counting begins with 0):
   // Print a message to the LCD.
 
-  //lcd.setCursor(0, 1);
+  lcd.setCursor(0, 1);
   // print the number of seconds since reset:
-  //lcd.print(millis() / 1000);
+  lcd.print(millis() / 1000);
 }
