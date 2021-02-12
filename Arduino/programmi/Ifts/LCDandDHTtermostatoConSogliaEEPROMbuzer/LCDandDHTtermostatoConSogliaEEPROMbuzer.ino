@@ -57,8 +57,10 @@ unsigned long lastButtonPressed;
 
 // imposta la soglia standard
 float soglia = 26;
-#define SOGLIA_MAX 35
-#define SOGLIA_MIN 5
+#define SOGLIA_MAX 4.5
+#define SOGLIA_MIN -10
+#define ALLARME 5
+
 // imposta l'isteresi
 #define ISTERESI 1.0
 // imposta la calibrazione del sensore di temperatura
@@ -67,6 +69,8 @@ float correzione = -1;
 
 #define SOGLIA_ADDRESS 0
 #define CONTROLL_ADRESS 255
+
+unsigned char blinkChar = '.';
 
 // include the library code:
 #include <LiquidCrystal.h>
@@ -117,7 +121,7 @@ void setup() {
   //Serial.println(controllo);
   if ( controllo == 123 ) {
     //Serial.println("ok");
-    EEPROM.get(SOGLIA_ADDRESS,soglia);
+    EEPROM.get(SOGLIA_ADDRESS, soglia);
   } else {
     //Serial.println("format");
     EEPROM.put(SOGLIA_ADDRESS, soglia);
@@ -161,18 +165,8 @@ void loop() {
   }
 
   if ((millis() - tempo) > 500) {
-    lcd.setCursor(15, 0);
-    
-    if ( blink ) {
-      lcd.print(".");
-      blink = false;
-    } else {
-      lcd.print(" ");
-      blink = true;
-    }
-    
-    tempo = millis();
     lcd.setCursor(0, 1);
+    tempo = millis();
     // Reading temperature or humidity takes about 250 milliseconds!
     // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
     int h = dht.readHumidity();
@@ -181,20 +175,36 @@ void loop() {
     t = t + correzione;
     lcd.print("H:");
     lcd.print(h);
-    lcd.setCursor(6, 1);
+    lcd.setCursor(5, 1);
     lcd.print("T:");
     lcd.print(t, 1);
     lcd.setCursor(13, 1);
     if ( t > ( soglia + (ISTERESI / 2) )) {
-      lcd.print("off ");
-      digitalWrite(LED_BUILTIN, LOW);
-    } else if ( t < ( soglia - (ISTERESI / 2)) ) {
       lcd.print("on ");
       digitalWrite(LED_BUILTIN, HIGH);
+    } else if ( t < ( soglia - (ISTERESI / 2)) ) {
+      lcd.print("off ");
+      digitalWrite(LED_BUILTIN, LOW);
     }
     //Serial.print(h);
     //Serial.print("\t");
     //Serial.println(t);
+
+    if ( t > ALLARME ) {
+      blinkChar = 'E';
+    } else {
+      blinkChar = '.';
+    }
+
+    lcd.setCursor(15, 0);
+    if ( blink ) {
+      lcd.write(blinkChar);
+      blink = false;
+    } else {
+      lcd.print(" ");
+      blink = true;
+    }
+
   }
   lcd.setCursor(8, 0);
   lcd.print(soglia, 1);
