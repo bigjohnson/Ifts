@@ -48,7 +48,7 @@ void loop() {
     joy = 511 - joy;
     //Serial.print(joy);
     //Serial.print("\t");
-    unsigned char speed = map(joy, 0, 511, 0, 255);
+    unsigned char speed = map(joy, 0, 511, 0, 255);      
     digitalWrite(DIRA, HIGH); //one way
     digitalWrite(DIRB, LOW);
     analogWrite(ENABLE, speed);
