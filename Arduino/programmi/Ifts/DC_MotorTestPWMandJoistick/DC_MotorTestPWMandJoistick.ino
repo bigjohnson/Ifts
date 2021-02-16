@@ -10,6 +10,7 @@
 #define DIRA 3
 #define DIRB 4
 #define MIN_SPEED 60
+#define TOLLERANZA 2
 
 const int X_pin = 0; // analog pin connected to X output
 
@@ -20,34 +21,40 @@ void setup() {
   pinMode(ENABLE, OUTPUT);
   pinMode(DIRA, OUTPUT);
   pinMode(DIRB, OUTPUT);
-  Serial.begin(9600);
+  //Serial.begin(9600);
   digitalWrite(DIRA, HIGH); //one way
   digitalWrite(DIRB, LOW);
-  analogWrite(ENABLE, 255);
-  delay(20);
-  Serial.println("speed");
+  //Serial.println("joya\tjoyb\tspeed");
 }
 
 void loop() {
   //Serial.println("PWM speed test");
   //Serial.println("Avanti");
   unsigned int joy = analogRead(X_pin);
-  if ( joy > 515 ) {
-    joy = joy - 514;
-    unsigned char speed = map(joy, 0, 514, 0, 255);
+  if ( joy > ( 513 + TOLLERANZA ) ) {
+    //Serial.print(joy);
+    //Serial.print("\t");
+    joy = joy - 512;
+    //Serial.print(joy);
+    //Serial.print("\t");
+    unsigned char speed = map(joy, 0, 511, 0, 255);
     digitalWrite(DIRA, LOW); //one way
     digitalWrite(DIRB, HIGH);
     analogWrite(ENABLE, speed);
-    Serial.println(speed);
-  } else if ( joy < 509 ) {
-    joy = 510 - joy;
-    unsigned char speed = map(joy, 0, 514, 0, 255);
+    //Serial.println(speed);
+  } else if ( joy < (513 - TOLLERANZA) ) {
+    //Serial.print(joy);
+    //Serial.print("\t");
+    joy = 511 - joy;
+    //Serial.print(joy);
+    //Serial.print("\t");
+    unsigned char speed = map(joy, 0, 511, 0, 255);
     digitalWrite(DIRA, HIGH); //one way
     digitalWrite(DIRB, LOW);
     analogWrite(ENABLE, speed);
-    Serial.println(speed);
+    //Serial.println(speed);
   } else {
     analogWrite(ENABLE, 0);
   }
-  delay(100);
+  //delay(100);
 }
