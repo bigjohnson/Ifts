@@ -1,0 +1,6 @@
+20210217 solo utilizzo no opzioni shell e autocompletamento
+cd
+ls
+pwd
+man
+touch
