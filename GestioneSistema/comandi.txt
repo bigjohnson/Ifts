@@ -4,3 +4,12 @@ ls
 pwd
 man
 touch
+20210218 aggiunti comandi e redirezione standard output
+mkdir
+cat
+fgrep
+STDIN
+STDOUT
+echo
+>
+>>
