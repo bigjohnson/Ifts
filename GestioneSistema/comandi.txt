@@ -6,6 +6,7 @@ man
 touch
 20210218 aggiunti comandi e redirezione standard output
 mkdir
+rmdir
 cat
 fgrep
 STDIN
