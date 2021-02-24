@@ -14,3 +14,11 @@ STDOUT
 echo
 >
 >>
+20210223 
+cp
+sudo
+nano
+ssh da cmd windows
+export
+mv
+unset
