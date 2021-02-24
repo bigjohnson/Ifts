@@ -1,5 +1,5 @@
-#define STRINGSIZE 10
-String stringa = String();
+#define COMANDSIZE 10
+String stringa;
 
 void setup() {
   // put your setup code here, to run once:
@@ -11,7 +11,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   while (Serial.available() > 0) {
     char ricevuto = Serial.read();
-    if (ricevuto != '\n' && stringa.length() < STRINGSIZE ) {
+    if (ricevuto != '\n' && stringa.length() < COMANDSIZE ) {
       stringa += ricevuto;
     } else if ( ricevuto == '\n' && stringa.length() > 0 ) {
       Serial.println(stringa);
