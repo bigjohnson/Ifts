@@ -16,7 +16,7 @@
 Adafruit_MCP23017 mcp;
 
 void setup() {
-  mcp.begin(0x20);      // use default address 0
+  mcp.begin();      // use default address 0
   for ( unsigned char pin = 0; pin < 16; pin ++) {
     mcp.pinMode(pin, OUTPUT);
   }
