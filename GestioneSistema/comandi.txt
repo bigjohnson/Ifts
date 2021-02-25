@@ -22,3 +22,8 @@ ssh da cmd windows
 export
 mv
 unset
+if
+else
+for in
+$()
+{//}
