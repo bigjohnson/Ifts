@@ -30,3 +30,5 @@ $()
 /proc/cpuinfo
 free
 top
+parametri script
+codici uscita programmi 0 o > 0
