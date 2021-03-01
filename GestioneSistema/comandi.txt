@@ -1,27 +1,27 @@
 20210217 solo utilizzo no opzioni shell e autocompletamento
-cd
-ls
-pwd
-man
-touch
+cd	cambia la directory, se usato senza parametri va nella directory home dell'utente, se c'è un parametro va nella directory indicata col paramtro
+ls	lista il contenuto delle directory, se non c'è nessun parametro lista il contenuto della directory corrente, se c'è un parametro lista il contenuto della directory indicata nel parametro, se il parametro è un file indica le informazioni del file, con l'opzione -l ritorna la lista estesa con più informazioni
+pwd	stampa la directory corrente
+man	stampa i manuali di tutti i comandi
+touch	serve per creare file vuoti
 20210218 aggiunti comandi e redirezione standard output
-mkdir
-rmdir
-cat
-fgrep
+mkdir	creare directory
+rmdir	cancellare directory vuote
+cat	stampa il contenuto dei files
+fgrep	cerca testi nei files
 STDIN
 STDOUT
 echo
 >
 >>
 20210223 
-cp
-sudo
-nano
+cp	serve per copiare i files, il primo parametro è il file di origine, il secondo il file di destinazione, con il parametro -r è possibile copiare intere directory
+sudo	server per eseguire i comandi come un altro utente, di solito si usa per eseguire i comandi come root. che è il super utente dei sistemi operativi linux che può fare qualsiasi cosa, attenzione anche distruggere la macchina
+nano	semplice editor di testo da usare per modifcare i files
 ssh da cmd windows
 export
-mv
 unset
+mv
 if
 else
 for in
@@ -32,3 +32,5 @@ free
 top
 parametri script
 codici uscita programmi 0 o > 0
+$(())
+read	legge una riga di input dall'utente e la mette nella variabile passata come parametro
