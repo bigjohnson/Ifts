@@ -34,3 +34,7 @@ parametri script
 codici uscita programmi 0 o > 0
 $(())
 read	legge una riga di input dall'utente e la mette nella variabile passata come parametro
+date
+tar
+logger
+mail
