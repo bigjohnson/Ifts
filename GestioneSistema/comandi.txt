@@ -11,6 +11,7 @@ cat	stampa il contenuto dei files
 fgrep	cerca testi nei files
 STDIN
 STDOUT
+STDERR
 echo
 >
 >>
@@ -22,11 +23,12 @@ ssh da cmd windows
 export
 unset
 mv
+
 if
 else
 for in
 $()
-{//}
+${//}
 /proc/cpuinfo
 free
 top
